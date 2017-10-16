@@ -68,6 +68,8 @@ export function setFilters(filter: ValidationFilter) {
     setIntervalFilter(query, 'compatibility_score', filter.compatibility_score)
     setIntervalFilter(query, 'age', filter.age)
     setIntervalFilter(query, 'height_in_cm', filter.height)
+
+    return query
 }
 
 function setHasPhoto(query: PersonQuery, has_photo: boolean) {
