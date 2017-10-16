@@ -23,6 +23,9 @@ RUN npm run-script build
 
 RUN cp -r ../frontend/dist ./static
 ENV MONGOURL=mongodb://database/matches
+
+RUN npm run-script populatedb
+
 EXPOSE 8274
 
 CMD [ "npm", "run", "start:prod" ]
