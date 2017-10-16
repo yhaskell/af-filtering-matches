@@ -7,7 +7,7 @@ async function populate() {
     connectToDb()
     console.log("Populating matches...")
 
-    // await People.remove({})
+    await People.remove({})
 
     const { matches }: { matches: Person[] } = require('../../../data/matches.json')
     const mm = matches.map((u: Person) => ({...u, location: [u.city.lon, u.city.lat]}))

@@ -9,7 +9,7 @@
     "watch": "ts-node-dev src",
     "build": "tsc",
     "test": "cross-env NODE_ENV=test mocha -r ts-node/register test/*.ts",
-    "populatedb": "ts-node src/populate"
+    "populatedb": "ts-node src/tools/populate"
   },
   "dependencies": {
     "add": "^2.0.6",
