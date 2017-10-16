@@ -2,7 +2,7 @@ import { RequestHandler } from 'express'
 import { Types } from 'mongoose'
 
 import { default as People, Person } from '../db/person'
-import { getMatchFilter } from '../lib/match-filter'
+import { validateFilter, setFilters, setDistanceFilter } from '../filter'
 import * as response from './response'
 import * as log from '../lib/logger'
 
@@ -49,44 +49,16 @@ export const bySearchTerms: RequestHandler = async (req, rsp, next) => {
 
 
     try {
-        const filter = getMatchFilter(req.body)
 
-        const PQuery = People.find()
+        const filter = validateFilter(req.body)
+        
+        const queryWithFilters = setFilters(filter)
 
-        if (filter.has_photo !== null) PQuery.where('main_photo', filter.has_photo ? { $ne: null } : null)
-        if (filter.in_contact !== null) {
-            if (filter.in_contact)
-                PQuery.where('contacts_exchanged').gt(0)
-            else
-                PQuery.where('contacts_exchanged').equals(0)
-        }
-        if (filter.is_favourite !== null) PQuery.where('favourite', filter.is_favourite)
+        if (filter.distance !== null) 
+            setDistanceFilter(queryWithFilters, filter.distance, req.body.location)
 
-        PQuery.where('compatibility_score', filter.compatibility_score)
-
-        if (filter.age.$gt) PQuery.where('age').gt(filter.age.$gt)
-        if (filter.age.$lt) PQuery.where('age').lt(filter.age.$lt)
-
-        if (filter.height.$gt) PQuery.where('height_in_cm').gt(filter.height.$gt)
-        if (filter.height.$lt) PQuery.where('height_in_cm').lt(filter.height.$lt)
-
-        if (filter.distance) {
-            if (!req.body.location) throw new Error('Current position hasn\'t been provided.')
-            const { lat, lon } = req.body.location
-
-            if (filter.distance) PQuery.find({
-                location: {
-                    $nearSphere: {
-                        $geometry: {
-                            type: 'Point',
-                            coordinates: [lon, lat],
-                        },
-                        $maxDistance: filter.distance * 1000,
-                    }
-                }
-            })
-        }
-        const people = await PQuery.exec()
+        
+        const people = await queryWithFilters.exec()
 
         return response.success(rsp, people)
 

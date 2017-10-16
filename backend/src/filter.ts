@@ -62,12 +62,13 @@ export function validateFilter(filter: any): ValidationFilter {
 export function setFilters(filter: ValidationFilter) {
     const query = People.find()
 
-    if (filter.has_photo !== null) setHasPhoto(query, filter.has_photo)
-    if (filter.in_contact !== null) setInContact(query, filter.in_contact)
+   if (filter.has_photo !== null) setHasPhoto(query, filter.has_photo)
+   if (filter.in_contact !== null) setInContact(query, filter.in_contact)
+   if (filter.is_favourite !== null) setIsFavourite(query, filter.is_favourite)
 
-    setIntervalFilter(query, 'compatibility_score', filter.compatibility_score)
-    setIntervalFilter(query, 'age', filter.age)
-    setIntervalFilter(query, 'height_in_cm', filter.height)
+   setCompatibilityScoreFilter(query, filter.compatibility_score)
+   setIntervalFilter(query, 'age', filter.age)
+   setIntervalFilter(query, 'height_in_cm', filter.height)
 
     return query
 }
@@ -90,11 +91,22 @@ function setIsFavourite(query: PersonQuery, is_favourite: boolean) {
     query.where('favourite', is_favourite)
 }
 
+function setCompatibilityScoreFilter(query: PersonQuery, value: FilterNumberInterval) {
+    setIntervalFilter(
+        query, 
+        'compatibility_score', 
+        { 
+            from: value.from && value.from / 100, 
+            to: value.to && value.to / 100 
+        }
+    )
+}
+
 function setIntervalFilter(query: PersonQuery, field: string, value: FilterNumberInterval) {
     if (value.from)
-        query.where(field).gt(value.from)
+        query.where(field).gte(value.from)
     if (value.to)
-        query.where(field).lt(value.to)
+        query.where(field).lte(value.to)
 }
 
 export function setDistanceFilter(query: PersonQuery, distance: number, location: Location) {
