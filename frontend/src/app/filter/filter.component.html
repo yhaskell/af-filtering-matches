@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>Filter people</h1>
+<div mat-dialog-content>
+  <p>
+    <mat-checkbox [(indeterminate)]="has_photo_indeterminate" [(ngModel)]="dataView.has_photo">Has photo</mat-checkbox>
+
+    <mat-checkbox [(indeterminate)]="in_contact_indeterminate" [(ngModel)]="dataView.in_contact">In contact</mat-checkbox>
+    <mat-checkbox [(indeterminate)]="is_favourite_indeterminate" [(ngModel)]="dataView.is_favourite">Favourite</mat-checkbox>
+  </p>
+  <p>
+    Compatibility score: {{dataView.compatibility_score[0]}}% to {{dataView.compatibility_score[1]}}%
+    <nouislider [min]="1" [max]="99" [step]=1 [(ngModel)]="dataView.compatibility_score"></nouislider>
+  </p>
+  <p>
+    Age: {{ageDescription}}
+    <nouislider [min]="18" [max]="100" [step]=1 [(ngModel)]="dataView.age"></nouislider>
+  </p>
+  <p>
+    Height (in cm): {{heightDescription}}
+    <nouislider [min]="135" [max]="211" [step]=1 [(ngModel)]="dataView.height"></nouislider>
+  </p>
+
+  <p>
+    Distance (in km): {{distanceDescription}}
+    <nouislider [min]="30" [max]="301" [step]=1 [(ngModel)]="dataView.distance"></nouislider>
+  </p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="filterModel" tabindex="2">Ok</button>
+</div>

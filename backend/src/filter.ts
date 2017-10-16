@@ -1,6 +1,6 @@
 import { NumberValidateable, ObjectValidateable, validate } from './lib/validation'
 import { default as People, PersonQuery } from './db/person'
-
+import { MatchFilter, FilterNumberInterval, Location } from '../../data/person'
 const NumberInterval = (from: NumberValidateable, to: NumberValidateable): ObjectValidateable => ({
     type: Object,
     required: true,
@@ -12,26 +12,6 @@ const NumberInterval = (from: NumberValidateable, to: NumberValidateable): Objec
 })
 
 const RequiredBoolean = { type: Boolean, required: true }
-
-interface FilterNumberInterval {
-    from: number | null
-    to: number | null
-}
-
-interface Location {
-    lat: number
-    lon: number
-}
-
-export interface ValidationFilter {
-    compatibility_score: FilterNumberInterval
-    height: FilterNumberInterval
-    age: FilterNumberInterval
-    distance: number | null
-    is_favourite: boolean | null
-    in_contact: boolean | null
-    has_photo: boolean | null
-}
 
 const ValidationSchema = {
     type: Object,
@@ -52,14 +32,12 @@ const ValidationSchema = {
     }
 }
 
-export function validateFilter(filter: any): ValidationFilter {
+export function validateFilter(filter: any): MatchFilter {
     validate(ValidationSchema, filter)
     return filter
 }
 
-
-
-export function setFilters(filter: ValidationFilter) {
+export function setFilters(filter: MatchFilter) {
     const query = People.find()
 
    if (filter.has_photo !== null) setHasPhoto(query, filter.has_photo)

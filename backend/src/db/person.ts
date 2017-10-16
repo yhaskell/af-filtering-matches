@@ -1,23 +1,6 @@
 import { Document, Schema, model, DocumentQuery } from 'mongoose'
-
-
-export interface Person {
-    display_name: string
-    age: number
-    job_title: string
-    height_in_cm: number
-    city: {
-        name: string
-        lat: number
-        lon: number
-    },
-    location: [number, number]
-    main_photo: string
-    compatibility_score: number
-    contacts_exchanged: number
-    favourite: boolean
-    religion: string
-}
+import { Person } from '../../../data/person'
+export { Person } from '../../../data/person'
 
 const PersonSchema = new Schema({
     display_name: String,

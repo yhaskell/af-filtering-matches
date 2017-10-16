@@ -1,0 +1,45 @@
+<mat-toolbar color="primary">
+  <span>Matches</span>
+  <span class="fill-remaining-space"></span>
+  <span>
+    <mat-menu #appMenu="matMenu">
+      <button mat-menu-item *ngFor="let loc of locations" (click)="setLocation(loc)">
+        <mat-icon [style.opacity]="loc == currentLocation ? 1 : 0"> done </mat-icon>
+        {{ loc.name }}
+      </button>
+    </mat-menu>
+
+    <button mat-icon-button [matMenuTriggerFor]="appMenu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  </span>
+</mat-toolbar>
+
+<div class="container" style="margin-top: 40px;">
+  <mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="display_name">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.display_name}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="job_title">
+      <mat-header-cell *matHeaderCellDef> Job title </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.job_title}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="age">
+      <mat-header-cell *matHeaderCellDef> Age </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.age}} y.o.</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="city_name">
+      <mat-header-cell *matHeaderCellDef> City </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.city.name}} </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
+
+<div class="bottom-right-corner">
+  <button mat-fab (click)="onFilter()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

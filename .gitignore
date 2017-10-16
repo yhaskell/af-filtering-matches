@@ -43,3 +43,6 @@ Thumbs.db
 
 # log files
 /**/*.log
+
+/**/*.js
+/**/*.js.map
