@@ -53,7 +53,7 @@ const ValidationSchema = {
 }
 
 export function validateFilter(filter: any): ValidationFilter {
-    validate(filter, ValidationSchema)
+    validate(ValidationSchema, filter)
     return filter
 }
 
