@@ -80,12 +80,12 @@ export function registerValidator<P extends Validateable>(type: any, validator: 
 }
 
 
-export function validate<P extends Validateable>(value: any, schema: P) {
+export function validate<P extends Validateable>(schema: P, value: any, key?: string) {
     const UValidator = validators.get(schema.type)
     if (!UValidator) {
         throw new ValidationError(`Don't have validator for ${schema.type}`)
     }
-    (new UValidator(schema)).validate(value)
+    (new UValidator(schema)).validate(value, key)
 }
 
 export class ObjectValidator extends Validator<ObjectValidateable> {
@@ -97,7 +97,7 @@ export class ObjectValidator extends Validator<ObjectValidateable> {
         if (!this.type.fields) return
 
         for (const field of Object.keys(this.type.fields)) {
-            validate(value[field], this.type.fields[field])
+            validate(this.type.fields[field], value[field], field)
         }
     }
 
