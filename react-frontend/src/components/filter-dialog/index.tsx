@@ -112,6 +112,7 @@ class DialogView extends Component<Props, Filter & { open: boolean }> {
                     </FloatingActionButton>
                 </div>
                 <Dialog
+                    bodyStyle={{ overflow: "scroll" }}
                     title="Filter matches"
                     actions={[submit]}
                     modal={false}
