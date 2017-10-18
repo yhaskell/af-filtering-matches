@@ -7,6 +7,7 @@ import List from 'material-ui/List'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 import PersonView from './person'
+import FilterNoResults from './filter-no-results'
 import { Person } from '../../data/person'
 import * as actions from '../../store/actions'
 
@@ -36,14 +37,18 @@ class PeopleList extends Component<PeopleListProps, {}> {
     }
 
     render() {
-        return (
-            <List>
-                <TransitionGroup className="people-list">
-                    {/* <div className="people-list"> */}
-                    {this.props.people.map(person => <Fade key={person._id}><PersonView person={person} /></Fade>)}
-                </TransitionGroup>
-            </List>
-        )
+        if (this.props.people.length === 0) {
+            return <FilterNoResults />
+        } else {
+            return (
+                <List>
+                    <TransitionGroup className="people-list">
+                        {/* <div className="people-list"> */}
+                        {this.props.people.map(person => <Fade key={person._id}><PersonView person={person} /></Fade>)}
+                    </TransitionGroup>
+                </List>
+            )
+        }
     }
 }
 
