@@ -1,4 +1,4 @@
-import { MatchFilter, Person } from '../../../data/person'
+import { MatchFilter, Person } from '../data/person'
 import { Injectable } from "@angular/core"
 import { Http } from "@angular/http"
 import 'rxjs/add/operator/toPromise'

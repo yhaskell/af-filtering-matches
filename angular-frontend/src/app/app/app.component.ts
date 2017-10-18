@@ -4,7 +4,7 @@ import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
-import { MatchFilter, Person } from '../../../../data/person';
+import { MatchFilter, Person } from '../../data/person';
 import { PeopleService } from '../people.service';
 import { MatDialog, MatSnackBar } from '@angular/material';
 

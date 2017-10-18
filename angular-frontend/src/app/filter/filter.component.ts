@@ -1,4 +1,4 @@
-import { MatchFilter } from '../../../../data/person';
+import { MatchFilter } from '../../data/person';
 import { Component, OnInit, Inject, Input } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
