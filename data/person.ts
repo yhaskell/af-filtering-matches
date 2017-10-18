@@ -1,4 +1,5 @@
 export interface Person {
+    _id?: string
     display_name: string
     age: number
     job_title: string
