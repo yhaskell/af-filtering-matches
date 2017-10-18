@@ -24,7 +24,7 @@
   </span>
 </mat-toolbar>
 
-<div class="container" style="margin-top: 40px;">
+<div class="container" style="margin-top: 40px;" *ngIf="peopleList && peopleList.length">
   <mat-table #table [dataSource]="dataSource">
     <ng-container matColumnDef="display_name">
       <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
@@ -46,6 +46,13 @@
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
 </div>
+
+<div class="filter-no-results" *ngIf="!peopleList || !peopleList.length">
+    <h2>No results found</h2>
+    <p>No results found with filters you've selected.</p>
+    <p>Remove some filters to see more people.</p>
+</div>
+
 
 <div class="bottom-right-corner">
   <button mat-fab (click)="onFilter()">
