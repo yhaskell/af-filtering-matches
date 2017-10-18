@@ -1,42 +1,46 @@
-FROM node:latest
-
-WORKDIR /usr/src/app/data
-COPY data .
-
-WORKDIR /usr/src/app/frontend
-
-COPY frontend/package.json .
+# Angular frontend
+FROM node:latest as angular
+WORKDIR /angular
+COPY angular-frontend/package.json .
 RUN npm install
 
-COPY frontend .
-
+COPY angular-frontend .
+COPY data /data
 RUN npm run build:bh
 
-WORKDIR /usr/src/app/react-frontend
-
+# React frontend
+FROM node:latest as react
+WORKDIR /react
 COPY react-frontend/package.json .
 RUN npm install
-
 COPY react-frontend .
-
+COPY data /data
 RUN PUBLIC_URL='/react' npm run-script build
 
-WORKDIR /usr/src/app/backend
-
+# Backend
+FROM node:latest as backend
+WORKDIR /backend
 COPY backend/package.json .
 RUN npm install
-
 COPY backend .
-
+COPY data /data
 RUN npm run-script build
 
-RUN mkdir -p static/react
+# Finishing result
+FROM node:latest
 
-RUN cp -r ../frontend/dist/* ./static/
-RUN cp -r ../react-frontend/build/* ./static/react
+WORKDIR /usr/src/app
+RUN mkdir -p backend/static/react
+COPY data/*.json ./data/
+COPY --from=backend /backend/node_modules ./backend/node_modules
+COPY --from=backend /backend/build/* ./backend/
+COPY --from=angular /angular/dist/* ./backend/static/
+COPY --from=react /react/build/*  ./backend/static/react/
+
+WORKDIR /usr/src/app/backend
 
 ENV MONGOURL=mongodb://database/matches
 
 EXPOSE 8274
 
-CMD [ "npm", "run", "start:prod" ]
+CMD [ "node", "src" ]
