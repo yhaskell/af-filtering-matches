@@ -1,0 +1,50 @@
+.bottom-right-corner {
+    position: fixed;
+    right: 40px;
+    bottom: 40px;
+    
+}
+
+.dialog-view.dialog-view__flags  {
+    display: table;
+    width: 100%;
+}
+
+.dialog-view.dialog-view__flags .dialog-view.dialog-view__flag {
+    width: 33%;
+    display: table-cell;
+}
+
+.dialog-view.dialog-view__range {
+    margin-top: 20px;
+}
+
+.dialog-view.dialog-view__range label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.rc-slider-rail {
+    height: 2px;
+    background-color: #aaa;
+}
+
+.rc-slider-track {
+    height: 2px;
+    background-color: rgb(96, 125, 139);
+}
+
+.rc-slider-handle {
+    background-color: rgb(96, 125, 139);
+    border: solid 1px rgb(96, 125, 139);
+    width: 12px;
+    height: 12px;
+}
+
+ .rc-slider-handle:active {
+    background-color: rgb(96, 125, 139);
+    border: solid 1px rgb(96, 125, 139);
+    box-shadow: 6px solid;
+    /* width: 18px;
+    height: 18px; */
+}

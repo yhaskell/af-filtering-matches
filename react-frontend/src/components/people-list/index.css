@@ -1,0 +1,43 @@
+.people-list {
+    display: block;
+    width: 100%;
+}
+.people-list > div {
+    display: inline-block;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .people-list > div {
+      width: 50%;
+    }
+  }
+@media (min-width: 992px) {
+    .people-list > div {
+        width: 33%;
+    }
+}
+@media (min-width: 1200px) {
+    .people-list > div {
+        width: 25%;
+    }
+}
+
+.fade-enter {
+    opacity: 0.01;
+}
+  
+.fade-enter.fade-enter-active {
+    opacity: 1;
+    transition: all 300ms ease-in;
+}
+  
+.fade-exit {
+    opacity: 1;
+}
+  
+.fade-exit.fade-exit-active {
+    opacity: 0.01;
+    transition: all 300ms ease-in;
+}
+  
