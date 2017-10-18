@@ -10,7 +10,7 @@ import * as config from '../config'
 export function configureMiddlewares(app: express.Application) {
     if (config.env !== 'test')
         app.use(morgan('dev'))
-    
+
     app.use(express.static('static'))
     app.use(bodyparser.json())
 }
