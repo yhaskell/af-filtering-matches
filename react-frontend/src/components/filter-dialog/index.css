@@ -11,8 +11,15 @@
 }
 
 .dialog-view.dialog-view__flags .dialog-view.dialog-view__flag {
-    width: 33%;
-    display: table-cell;
+    width: 100%;
+    display: block;
+}
+
+@media (min-width: 630px) {
+    .dialog-view.dialog-view__flags .dialog-view.dialog-view__flag {
+        width: 33%;
+        display: table-cell;
+    }
 }
 
 .dialog-view.dialog-view__range {
