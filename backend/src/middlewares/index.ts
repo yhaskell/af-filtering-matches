@@ -1,6 +1,7 @@
 import * as express from 'express'
 import * as morgan from 'morgan'
 import * as bodyparser from 'body-parser'
+import * as compression from 'compression'
 
 import { errorGuard } from './error-guard'
 import processError from './process-error'
@@ -13,6 +14,7 @@ export function configureMiddlewares(app: express.Application) {
 
     app.use(express.static('static'))
     app.use(bodyparser.json())
+    app.use(compression())
 }
 
 export function configureErrorMiddlewares(app: express.Application) {
