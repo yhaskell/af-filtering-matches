@@ -93,6 +93,10 @@ export class AppComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(value => this.setFilter(value))
   }
+
+  goReact() {
+    document.location.href = '/react'
+  }
 }
 
 export class PeopleDataService extends DataSource<Person> {

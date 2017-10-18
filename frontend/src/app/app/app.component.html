@@ -2,10 +2,19 @@
   <span>Matches</span>
   <span class="fill-remaining-space"></span>
   <span>
-    <mat-menu #appMenu="matMenu">
+    <mat-menu #citiesMenu="matMenu">
       <button mat-menu-item *ngFor="let loc of locations" (click)="setLocation(loc)">
         <mat-icon [style.opacity]="loc == currentLocation ? 1 : 0"> done </mat-icon>
         {{ loc.name }}
+      </button>
+    </mat-menu>
+    <mat-menu #appMenu="matMenu">
+      <a mat-menu-item href="/react">
+        Switch to React frontend
+      </a>
+      <button mat-menu-item [matMenuTriggerFor]="citiesMenu">
+        <span *ngIf="!!currentLocation">Current city: {{ currentLocation.name }}</span>
+        <span *ngIf="!currentLocation">Select city</span>
       </button>
     </mat-menu>
 
