@@ -29,15 +29,16 @@ RUN npm run-script build
 # Finishing result
 FROM node:latest
 
-WORKDIR /usr/src/app
+WORKDIR /app
 RUN mkdir -p backend/static/react
 COPY data/*.json ./data/
-COPY --from=backend /backend/node_modules ./backend/node_modules
-COPY --from=backend /backend/build/* ./backend/
-COPY --from=angular /angular/dist/* ./backend/static/
-COPY --from=react /react/build/*  ./backend/static/react/
 
-WORKDIR /usr/src/app/backend
+WORKDIR /app/backend
+
+COPY --from=backend /backend/node_modules ./node_modules
+COPY --from=backend /backend/build /app
+COPY --from=angular /angular/dist ./static
+COPY --from=react /react/build  ./static/react
 
 ENV MONGOURL=mongodb://database/matches
 
