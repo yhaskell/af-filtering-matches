@@ -1,4 +1,4 @@
-from node:latest
+FROM node:latest
 
 WORKDIR /usr/src/app/data
 COPY data .
@@ -10,7 +10,16 @@ RUN npm install
 
 COPY frontend .
 
-RUN npm run-script build
+RUN npm run build:bh
+
+WORKDIR /usr/src/app/react-frontend
+
+COPY react-frontend/package.json .
+RUN npm install
+
+COPY react-frontend .
+
+RUN PUBLIC_URL='/react' npm run-script build
 
 WORKDIR /usr/src/app/backend
 
@@ -21,10 +30,12 @@ COPY backend .
 
 RUN npm run-script build
 
-RUN cp -r ../frontend/dist ./static
-ENV MONGOURL=mongodb://database/matches
+RUN mkdir -p static/react
 
-RUN npm run-script populatedb
+RUN cp -r ../frontend/dist/* ./static/
+RUN cp -r ../react-frontend/build/* ./static/react
+
+ENV MONGOURL=mongodb://database/matches
 
 EXPOSE 8274
 
